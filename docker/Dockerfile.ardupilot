@@ -3,11 +3,11 @@ FROM $BASE_IMAGE
 
 # Arguments
 ARG COPTER_TAG=Copter-4.4
-ARG ARDUPILOT_DIR=/opt/tritonserver
+ARG ARDUPILOT_DIR=/workspaces
 
 # install git 
 RUN apt-get update && apt-get install -y git; git config --global url."https://github.com/".insteadOf git://github.com/
-RUN apt-get install -y sudo lsb-release tzdata
+RUN apt-get install -y sudo lsb-release tzdata xvfb
 
 # Now grab ArduPilot from GitHub
 WORKDIR $ARDUPILOT_DIR
@@ -17,36 +17,31 @@ WORKDIR $ARDUPILOT_DIR/ardupilot
 
 # Checkout the latest Copter...
 RUN git checkout ${COPTER_TAG}
-
-# Now start build instructions from http://ardupilot.org/dev/docs/setting-up-sitl-on-linux.html
 RUN git submodule update --init --recursive
 
 # Trick to get apt-get to not prompt for timezone in tzdata
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Required for installing requisites in docker container
-RUN useradd -m dockeruser && echo "dockeruser:dockeruser" | chpasswd && adduser dockeruser sudo
-RUN echo 'dockeruser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN useradd -m admin && echo "admin:admin" | chpasswd && adduser admin sudo
+RUN echo 'admin ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 ENV SKIP_AP_GIT_CHECK=1
-RUN su -c "Tools/environment_install/install-prereqs-ubuntu.sh -y" dockeruser
-# RUN Tools/environment_install/install-prereqs-ubuntu.sh -y
+RUN su -c "Tools/environment_install/install-prereqs-ubuntu.sh -y" admin
 
 # Required to be able to run sim_vehicle.py
-# RUN export PATH=$PATH:$ARDUPILOT_DIR/ardupilot/Tools/autotest
 ENV PATH="${PATH}:${ARDUPILOT_DIR}/ardupilot/Tools/autotest"
 RUN export PATH=/usr/lib/ccache:$PATH
 
-
-RUN python -m pip install empy pymavlink
+RUN python -m pip install empy pymavlink MAVProxy 
 RUN python -m pip install pexpect future
 
 # Continue build instructions from https://github.com/ArduPilot/ardupilot/blob/master/BUILD.md
 RUN ./waf distclean
 RUN ./waf configure --board sitl
 RUN ./waf copter
-# RUN ./waf rover 
-# RUN ./waf plane
-# RUN ./waf sub
+RUN ./waf rover 
+RUN ./waf plane
+RUN ./waf sub
 
 # TCP 5760 is what the sim exposes by default
 EXPOSE 5760/tcp
@@ -61,6 +56,10 @@ ENV MODEL +
 ENV SPEEDUP 1
 ENV VEHICLE ArduCopter
 
-RUN chmod -R u+w ${ARDUPILOT_DIR}/ardupilot
+# Give permissions to admin and config the github repo
+RUN sudo chmod -R 777 ${ARDUPILOT_DIR}/ardupilot
+RUN git config --global --add safe.directory /workspaces/ardupilot
+RUN export PATH="$PATH:/home/admin/.local/bin"
+
 # Finally the command
 ENTRYPOINT $ARDUPILOT_DIR/ardupilot/Tools/autotest/sim_vehicle.py --vehicle ${VEHICLE} -I${INSTANCE} --custom-location=${LAT},${LON},${ALT},${DIR} -w --frame ${MODEL} --no-rebuild --no-mavproxy --speedup ${SPEEDUP}
