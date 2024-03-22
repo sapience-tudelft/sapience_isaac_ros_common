@@ -9,6 +9,10 @@ ARG ARDUPILOT_DIR=/workspaces
 RUN apt-get update && apt-get install -y git; git config --global url."https://github.com/".insteadOf git://github.com/
 RUN apt-get install -y sudo lsb-release tzdata xvfb
 
+# For the GUI
+RUN apt update && \
+    apt install -y gcc procps xterm wget tk python3-wxgtk4.0 python-numpy
+
 # Now grab ArduPilot from GitHub
 WORKDIR $ARDUPILOT_DIR
 
@@ -34,6 +38,7 @@ RUN export PATH=/usr/lib/ccache:$PATH
 
 RUN python -m pip install empy pymavlink MAVProxy 
 RUN python -m pip install pexpect future
+
 
 # Continue build instructions from https://github.com/ArduPilot/ardupilot/blob/master/BUILD.md
 RUN ./waf distclean
