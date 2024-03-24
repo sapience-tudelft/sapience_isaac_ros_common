@@ -1,2 +1,2 @@
-CONFIG_IMAGE_KEY="ros2_humble.gz_garden.ardupilot"
-CONFIG_DOCKER_SEARCH_DIRS=(workspaces/isaac_ros-dev/isaac_ros_common/docker)
+CONFIG_IMAGE_KEY="ros2_humble.gz_garden"
+CONFIG_DOCKER_SEARCH_DIRS=(${ISAAC_ROS_WS}/src/isaac_ros_common/docker)
