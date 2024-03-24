@@ -15,10 +15,14 @@ source /opt/ros/${ROS_DISTRO}/setup.bash
 sudo apt-get update
 rosdep update
 
+
 export GZ_VERSION=garden
 rosdep install -r --from-paths src -i -y --rosdistro humble
 colcon build
 . install/setup.bash
+
+pip install pexpect pymavlink
+
 
 # Restart udev daemon
 sudo service udev restart
