@@ -16,6 +16,7 @@ RUN apt update && \
 # Now grab ArduPilot from GitHub
 WORKDIR $ARDUPILOT_DIR
 
+RUN echo ""
 RUN git clone https://github.com/maximecapelle/sapience_ardupilot.git ardupilot
 WORKDIR $ARDUPILOT_DIR/ardupilot
 
@@ -26,14 +27,11 @@ RUN git submodule update --init --recursive
 # Trick to get apt-get to not prompt for timezone in tzdata
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Required for installing requisites in docker container
-# RUN useradd -m admin && echo "admin:admin" | chpasswd && adduser admin sudo
-# RUN echo 'admin ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-# ENV SKIP_AP_GIT_CHECK=1
-# RUN su -c "Tools/environment_install/install-prereqs-ubuntu.sh -y" admin
-
+Required for installing requisites in docker container
+RUN useradd -m admin && echo "admin:admin" | chpasswd && adduser admin sudo
+RUN echo 'admin ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 ENV SKIP_AP_GIT_CHECK=1
-RUN su -c "Tools/environment_install/install-prereqs-ubuntu.sh -y"
+RUN su -c "Tools/environment_install/install-prereqs-ubuntu.sh -y" admin
 
 # Required to be able to run sim_vehicle.py
 ENV PATH="${PATH}:${ARDUPILOT_DIR}/ardupilot/Tools/autotest"
