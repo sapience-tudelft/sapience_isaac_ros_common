@@ -16,7 +16,7 @@ RUN apt update && \
 # Now grab ArduPilot from GitHub
 WORKDIR $ARDUPILOT_DIR
 
-RUN git clone https://github.com/ArduPilot/ardupilot.git ardupilot
+RUN git clone https://github.com/maximecapelle/sapience_ardupilot.git ardupilot
 WORKDIR $ARDUPILOT_DIR/ardupilot
 
 # Checkout the latest Copter...
@@ -27,10 +27,13 @@ RUN git submodule update --init --recursive
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Required for installing requisites in docker container
-RUN useradd -m admin && echo "admin:admin" | chpasswd && adduser admin sudo
-RUN echo 'admin ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+# RUN useradd -m admin && echo "admin:admin" | chpasswd && adduser admin sudo
+# RUN echo 'admin ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+# ENV SKIP_AP_GIT_CHECK=1
+# RUN su -c "Tools/environment_install/install-prereqs-ubuntu.sh -y" admin
+
 ENV SKIP_AP_GIT_CHECK=1
-RUN su -c "Tools/environment_install/install-prereqs-ubuntu.sh -y" admin
+RUN su -c "Tools/environment_install/install-prereqs-ubuntu.sh -y"
 
 # Required to be able to run sim_vehicle.py
 ENV PATH="${PATH}:${ARDUPILOT_DIR}/ardupilot/Tools/autotest"
