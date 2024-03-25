@@ -57,41 +57,25 @@ ENV USER_UID=${USER_UID}
 
 ###################### Ardupilot Stuff
 ENV USER=${USERNAME}
+USER ${USERNAME}
 ENV SKIP_AP_GIT_CHECK=1
 RUN Tools/environment_install/install-prereqs-ubuntu.sh -y
 
 # Required to be able to run sim_vehicle.py
+
 ENV PATH="${PATH}:/workspaces/ardupilot/Tools/autotest"
 RUN export PATH=/usr/lib/ccache:$PATH
+RUN pip install --upgrade pip
 RUN python -m pip install empy pymavlink MAVProxy pexpect future && \
     export PATH="$PATH:/home/admin/.local/bin"
 ENV PATH="/home/admin/.local/bin:${PATH}"
 ENV PATH="/root/.local/bin:${PATH}"
 
-
-# Continue build instructions from https://github.com/ArduPilot/ardupilot/blob/master/BUILD.md
-RUN ./waf distclean
-RUN ./waf configure --board sitl
-RUN ./waf copter
-RUN ./waf rover 
-RUN ./waf plane
-RUN ./waf sub
-
 # TCP 5760 is what the sim exposes by default
 EXPOSE 5760/tcp
 
-# Variables for simulator
-ENV INSTANCE 0
-ENV LAT 42.3898
-ENV LON -71.1476
-ENV ALT 14
-ENV DIR 270
-ENV MODEL +
-ENV SPEEDUP 1
-ENV VEHICLE ArduCopter
-
 # Give permissions to admin and config the github repo
+RUN sudo chmod -R 777 /workspaces
 RUN git config --global --add safe.directory /workspaces/ardupilot
 RUN export PATH="$PATH:/home/admin/.local/bin"
-ENTRYPOINT $ARDUPILOT_DIR/ardupilot/Tools/autotest/sim_vehicle.py --vehicle ${VEHICLE} -I${INSTANCE} --custom-location=${LAT},${LON},${ALT},${DIR} -w --frame ${MODEL} --no-rebuild --no-mavproxy --speedup ${SPEEDUP}
 ###################### 

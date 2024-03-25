@@ -67,8 +67,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 # ENV VEHICLE ArduCopter
 
 # # Give permissions to admin and config the github repo
-# RUN sudo chmod -R 777 ${ARDUPILOT_DIR}/ardupilot
-# RUN git config --global --add safe.directory /workspaces/ardupilot
+RUN sudo chmod -R 777 ${ARDUPILOT_DIR}/ardupilot
+RUN git config --global --add safe.directory /workspaces/ardupilot
 # RUN export PATH="$PATH:/home/admin/.local/bin"
 
 # # Finally the command
