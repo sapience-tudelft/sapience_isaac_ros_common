@@ -75,7 +75,6 @@ ENV PATH="/root/.local/bin:${PATH}"
 EXPOSE 5760/tcp
 
 # Give permissions to admin and config the github repo
-RUN sudo chmod -R 777 /workspaces
 RUN git config --global --add safe.directory /workspaces/ardupilot
 RUN export PATH="$PATH:/home/admin/.local/bin"
 ###################### 
