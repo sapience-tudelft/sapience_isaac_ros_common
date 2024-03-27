@@ -77,4 +77,7 @@ EXPOSE 5760/tcp
 # Give permissions to admin and config the github repo
 RUN git config --global --add safe.directory /workspaces/ardupilot
 RUN export PATH="$PATH:/home/admin/.local/bin"
+
+# MAVROS stuff
+RUN sudo apt-get install python3-rosinstall-generator -y
 ###################### 
