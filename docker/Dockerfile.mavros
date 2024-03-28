@@ -3,61 +3,12 @@ FROM $BASE_IMAGE
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# # Install apt packages
-# RUN apt-get -q update \
-#     # && apt-get -q -y upgrade \
-#     && apt-get -q install --no-install-recommends -y \
-#     git \
-#     wget \
-#     curl \
-#     sudo \
-#     clang \
-#     clang-format \
-#     clang-tidy \
-#     clang-tools \
-#     python3-pip \
-#     python3-dev \
-#     software-properties-common \
-#     && apt-get autoremove -y \
-#     && apt-get clean -y \
-#     && rm -rf /var/lib/apt/lists/*
-
-# # Install MAVROS dependencies
-# WORKDIR /home/$USERNAME
-# RUN wget https://raw.githubusercontent.com/mavlink/mavros/ros2/mavros/scripts/install_geographiclib_datasets.sh \
-#     && chmod +x install_geographiclib_datasets.sh \
-#     && sudo ./install_geographiclib_datasets.sh
-
-RUN sudo apt install -y python3-vcstool python3-rosinstall-generator
-
-# 1. Create the workspace: unneeded if you already has workspace
-RUN mkdir -p /workspaces/sapience_nvidia_devel/src
+# Change to working directory
 WORKDIR /workspaces/sapience_nvidia_devel/
 
-# 2. Install MAVLink
-#    we use the Kinetic reference for all ROS distros as it's not distro-specific and up to date
-RUN rosinstall_generator --format repos mavlink | tee /tmp/mavlink.repos
-
-# 3. Install MAVROS: get source (upstream - released)
-# RUN rosinstall_generator --format repos --upstream mavros | tee -a /tmp/mavros.repos
-# alternative: latest source
-RUN rosinstall_generator --format repos --upstream-development mavros | tee -a /tmp/mavros.repos
-# For fetching all the dependencies into your ros2_ws, just add '--deps' to the above scripts
-# RUN rosinstall_generator --format repos --upstream mavros --deps | tee -a /tmp/mavros.repos
-
-# 4. Create workspace & deps
-RUN vcs import src < /tmp/mavlink.repos
-RUN vcs import src < /tmp/mavros.repos
-
-RUN apt-get update
+# RUN apt-get update
 RUN sudo python -m pip install pexpect future
 RUN rosdep install --from-paths src --ignore-src -y
 
-# 5. Install GeographicLib datasets:
+# Install GeographicLib datasets:
 RUN ./src/mavros/mavros/scripts/install_geographiclib_datasets.sh
-
-
-
-# # 7. Make sure that you use setup.bash or setup.zsh from workspace.
-# #    Else ros2 run can't find nodes from this workspace.
-# RUN source install/setup.bash
