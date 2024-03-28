@@ -31,8 +31,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN sudo apt install -y python3-vcstool python3-rosinstall-generator
 
 # 1. Create the workspace: unneeded if you already has workspace
-RUN mkdir -p /workspaces/mavros_testing/src
-WORKDIR /workspaces/mavros_testing/
+RUN mkdir -p /workspaces/sapience_nvidia_devel/src
+WORKDIR /workspaces/sapience_nvidia_devel/
 
 # 2. Install MAVLink
 #    we use the Kinetic reference for all ROS distros as it's not distro-specific and up to date

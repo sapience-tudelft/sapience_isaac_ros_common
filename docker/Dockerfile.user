@@ -79,5 +79,5 @@ ENV USER_UID=${USER_UID}
 #     && apt-get clean -y \
 #     && rm -rf /var/lib/apt/lists/*
 
-# # # 6. Build source
-RUN source /opt/ros/humble/setup.bash && colcon build
+# # # # 6. Build source
+# RUN source /opt/ros/humble/setup.bash && colcon build
