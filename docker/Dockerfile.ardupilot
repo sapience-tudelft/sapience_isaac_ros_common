@@ -9,6 +9,15 @@ ARG ARDUPILOT_DIR=/workspaces
 RUN apt-get update && apt-get install -y git; git config --global url."https://github.com/".insteadOf git://github.com/
 RUN apt-get install -y sudo lsb-release tzdata xvfb
 
+RUN sudo apt-get -q update \
+    && sudo apt-get -q install --no-install-recommends -y \
+    python3-wxgtk4.0 \
+    rapidjson-dev \
+    xterm \
+    && sudo apt-get autoremove -y \
+    && sudo apt-get clean -y \
+    && sudo rm -rf /var/lib/apt/lists/*
+
 # For the GUI
 RUN apt update && \
     apt install -y gcc procps xterm wget tk python3-wxgtk4.0 python-numpy
@@ -17,6 +26,7 @@ RUN apt update && \
 WORKDIR $ARDUPILOT_DIR
 
 RUN git clone https://github.com/maximecapelle/sapience_ardupilot.git ardupilot
+RUN git clone https://github.com/ArduPilot/ardupilot_gazebo.git
 WORKDIR $ARDUPILOT_DIR/ardupilot
 
 # Checkout the latest Copter...

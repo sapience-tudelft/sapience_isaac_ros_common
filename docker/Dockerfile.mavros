@@ -3,12 +3,19 @@ FROM $BASE_IMAGE
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Change to working directory
+RUN sudo apt install -y python3-vcstool python3-rosinstall-generator
+
+RUN mkdir -p /workspaces/sapience_nvidia_devel/src
 WORKDIR /workspaces/sapience_nvidia_devel/
 
-# RUN apt-get update
+RUN rosinstall_generator --format repos mavlink | tee /tmp/mavlink.repos
+RUN rosinstall_generator --format repos --upstream-development mavros | tee -a /tmp/mavros.repos
+
+RUN vcs import src < /tmp/mavlink.repos
+RUN vcs import src < /tmp/mavros.repos
+
+RUN apt-get update
 RUN sudo python -m pip install pexpect future
 RUN rosdep install --from-paths src --ignore-src -y
 
-# Install GeographicLib datasets:
 RUN ./src/mavros/mavros/scripts/install_geographiclib_datasets.sh
