@@ -23,6 +23,10 @@ rosdep install -r --from-paths src -i -y --rosdistro humble
 colcon build
 . install/setup.bash
 
+cd ../ardupilot_gazebo && colcon build
+export GZ_SIM_SYSTEM_PLUGIN_PATH=/workspaces/ardupilot_gazebo/build/ardupilot_gazebo:$GZ_SIM_SYSTEM_PLUGIN_PATH
+cd ../sapience_nvidia_devel
+
 # Restart udev daemon
 sudo service udev restart
 

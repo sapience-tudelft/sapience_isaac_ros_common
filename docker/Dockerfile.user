@@ -73,6 +73,7 @@ ENV PATH="/root/.local/bin:${PATH}"
 # TCP 5760 is what the sim exposes by default
 EXPOSE 5760/tcp
 RUN sudo chmod -R 777 /workspaces/ardupilot
+RUN sudo chmod -R 777 /workspaces/ardupilot_gazebo
 
 # Give permissions to admin and config the github repo
 RUN git config --global --add safe.directory /workspaces/ardupilot
