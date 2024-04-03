@@ -1,0 +1,42 @@
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
+
+ARG ARDUPILOT_GAZEBO_DIR=/workspaces
+ARG WS_FOLDER=/workspaces/sapience_nvidia_devel
+ARG SRC_FOLDER=${WS_FOLDER}/src
+
+RUN sudo apt-get -q update \
+    && sudo apt-get -q install --no-install-recommends -y \
+    python3-wxgtk4.0 \
+    rapidjson-dev \
+    xterm \
+    && sudo apt-get autoremove -y \
+    && sudo apt-get clean -y \
+    && sudo rm -rf /var/lib/apt/lists/*
+# Install git 
+RUN apt-get update && apt-get install -y git; git config --global url."https://github.com/".insteadOf git://github.com/
+RUN apt-get install -y sudo lsb-release tzdata xvfb
+
+# For the GUI
+RUN apt update && \
+    apt install -y gcc procps xterm wget tk python3-wxgtk4.0 python-numpy
+# Export paths
+RUN export GZ_SIM_SYSTEM_PLUGIN_PATH=$ARDUPILOT_GAZEBO_DIR/ardupilot_gazebo/build:$GZ_SIM_SYSTEM_PLUGIN_PATH
+RUN export GZ_SIM_RESOURCE_PATH=$ARDUPILOT_GAZEBO_DIR/ardupilot_gazebo/models:$ARDUPILOT_GAZEBO_DIR/ardupilot_gazebo/worlds:$GZ_SIM_RESOURCE_PATH
+# Micro-XRCE-DDS-Gen
+WORKDIR $ARDUPILOT_GAZEBO_DIR
+RUN git clone -b master --recurse-submodules https://github.com/ArduPilot/Micro-XRCE-DDS-Gen.git --depth 1 --no-single-branch --branch master dds-gen \
+    && cd dds-gen \
+    && ./gradlew assemble
+# Ardupilot SITL
+WORKDIR $SRC_FOLDER
+RUN wget https://raw.githubusercontent.com/ArduPilot/ardupilot/master/Tools/ros2/ros2.repos
+RUN vcs import --recursive < ros2.repos
+WORKDIR $WS_FOLDER
+USER admin
+RUN sudo apt update
+RUN rosdep update
+RUN sudo rosdep install -r --rosdistro ${ROS_DISTRO} --from-paths src -y
+ENV ROS_VERSION=2
+ENV ROS_PYTHON_VERSION=3
+ENV ROS_DISTRO=humble
