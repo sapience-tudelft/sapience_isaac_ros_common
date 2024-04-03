@@ -3,7 +3,7 @@ FROM $BASE_IMAGE
 
 ARG ARDUPILOT_GAZEBO_DIR=/workspaces
 ARG WS_FOLDER=/workspaces/sapience_nvidia_devel
-ARG SRC_FOLDER=${WS_FOLDER}/src
+ARG SRC_FOLDER=/workspaces/sapience_nvidia_devel/src
 
 RUN sudo apt-get -q update \
     && sudo apt-get -q install --no-install-recommends -y \
@@ -29,11 +29,9 @@ RUN git clone -b master --recurse-submodules https://github.com/ArduPilot/Micro-
     && cd dds-gen \
     && ./gradlew assemble
 # Ardupilot SITL
-WORKDIR $SRC_FOLDER
-RUN wget https://raw.githubusercontent.com/ArduPilot/ardupilot/master/Tools/ros2/ros2.repos
-RUN vcs import --recursive < ros2.repos
 WORKDIR $WS_FOLDER
 USER admin
+RUN source /opt/ros/humble/setup.bash
 RUN sudo apt update
 RUN rosdep update
 RUN sudo rosdep install -r --rosdistro ${ROS_DISTRO} --from-paths src -y
