@@ -46,3 +46,48 @@ RUN adduser ${USERNAME} sudo
 ENV USERNAME=${USERNAME}
 ENV USER_GID=${USER_GID}
 ENV USER_UID=${USER_UID}
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        lsb-release \
+        sudo \
+        wget \
+        software-properties-common \
+        build-essential \
+        ccache \
+        g++ \
+        gdb \
+        gawk \
+        git \
+        make \
+        cmake \
+        ninja-build \
+        libtool \
+        libxml2-dev \
+        libxml2-utils \
+        libxslt1-dev \
+        python3-numpy \
+        python3-pyparsing \
+        python3-serial \
+        python-is-python3 \
+        libpython3-stdlib \
+        libtool-bin \
+        zip \
+        default-jre \
+        socat \
+        ros-dev-tools \
+        ros-humble-launch-pytest \
+        gnupg \
+        python3-wxgtk4.0 \
+        rapidjson-dev \
+        xterm \
+        gcc \
+        procps \
+        tk \
+        python-numpy \
+        tzdata \
+        xvfb \
+    && apt-get clean \
+    && apt-get -y autoremove \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+

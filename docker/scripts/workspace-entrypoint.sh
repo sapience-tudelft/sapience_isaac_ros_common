@@ -12,20 +12,21 @@
 echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
 source /opt/ros/${ROS_DISTRO}/setup.bash
 
+# Sapience Devel ws --------------
 sudo apt-get update
 rosdep update
-
-# Gazebo Garden
 export GZ_VERSION=garden
 rosdep install -r --from-paths src -i -y --rosdistro humble
+# --------------------------------
 
-# # Build packages
-# colcon build
-# . install/setup.bash
+# Ardupilot_ws -------------------
+cd /workspaces/ardupilot_ws/ && rosdep install -r --from-paths src -i -y --rosdistro humble && 
+export PATH=$PATH:/workspaces/ardupilot_ws/src/Micro-XRCE-DDS-Gen/scripts
+export PATH=$PATH:/workspaces/ardupilot_ws/src/ardupilot/Tools/autotest
+# --------------------------------
 
-# cd ../ardupilot_gazebo && colcon build
-# export GZ_SIM_SYSTEM_PLUGIN_PATH=/workspaces/ardupilot_gazebo/build/ardupilot_gazebo:$GZ_SIM_SYSTEM_PLUGIN_PATH
-# cd ../sapience_nvidia_devel
+# Return to starting point
+cd /workspaces/sapience_nvidia_devel
 
 # Restart udev daemon
 sudo service udev restart

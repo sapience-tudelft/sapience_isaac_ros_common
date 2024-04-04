@@ -17,3 +17,9 @@ RUN  sudo chmod +x /usr/local/bin/scripts/*.sh
 # Copy middleware profiles
 RUN sudo mkdir -p /usr/local/share/middleware_profiles
 COPY middleware_profiles/*profile.xml /usr/local/share/middleware_profiles/
+
+# Setup paths
+RUN python -m pip install empy pymavlink MAVProxy pexpect future && \
+    export PATH="$PATH:/home/admin/.local/bin"
+ENV PATH="/home/admin/.local/bin:${PATH}"
+ENV PATH="/root/.local/bin:${PATH}"
