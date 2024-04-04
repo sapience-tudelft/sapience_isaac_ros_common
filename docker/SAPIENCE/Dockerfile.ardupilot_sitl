@@ -13,7 +13,7 @@ RUN sudo chmod -R 777 ${ARDUPILOT_WS}
 WORKDIR $ARDUPILOT_WS_SRC
 
 # Clone Repos -------------------
-RUN git config --global --unset-all safe.directory /workspaces
+RUN git config --global --add safe.directory '*'
 # ardupilot_gazebo 
 RUN git clone -b ros2 https://github.com/ArduPilot/ardupilot_gazebo.git
 # ardupilot_gz
@@ -24,9 +24,9 @@ RUN git config --global --add safe.directory / \
 RUN git clone --recurse-submodules https://github.com/ardupilot/Micro-XRCE-DDS-Gen.git
 # Ardupilot
 USER admin 
-RUN git config --global --add safe.directory / \
-    && wget https://raw.githubusercontent.com/ArduPilot/ardupilot/master/Tools/ros2/ros2.repos \
-    && vcs import --recursive < ros2.repos
+RUN git config --global --add safe.directory '*' \
+    && sudo wget https://raw.githubusercontent.com/ArduPilot/ardupilot/master/Tools/ros2/ros2.repos \
+    && sudo vcs import --recursive < ros2.repos
 # -------------------------------
 
 # Setup & Build -----------------
