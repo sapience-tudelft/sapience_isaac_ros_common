@@ -17,6 +17,7 @@ sudo apt-get update
 rosdep update
 export GZ_VERSION=garden
 rosdep install -r --from-paths src -i -y --rosdistro humble
+colcon build
 # --------------------------------
 
 # Ardupilot_ws -------------------
