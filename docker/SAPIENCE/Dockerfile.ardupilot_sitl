@@ -13,20 +13,13 @@ RUN sudo chmod -R 777 ${ARDUPILOT_WS}
 WORKDIR $ARDUPILOT_WS_SRC
 
 # Clone Repos -------------------
-# RUN git config --global --add safe.directory '*'
-# # ardupilot_gazebo 
-# RUN git clone -b ros2 https://github.com/ArduPilot/ardupilot_gazebo.git
-# ardupilot_gz
+# Ardupilot & Gazebo Repos
+USER admin
 RUN git config --global --add safe.directory '*' \ 
     && wget https://raw.githubusercontent.com/ArduPilot/ardupilot_gz/main/ros2_gz.repos \
     && vcs import --recursive < ros2_gz.repos
 # Micro-XRCE-DDS-Gen
 RUN git clone --recurse-submodules https://github.com/ardupilot/Micro-XRCE-DDS-Gen.git
-# Ardupilot
-# USER admin 
-# RUN git config --global --add safe.directory '*' \
-#     && sudo wget https://raw.githubusercontent.com/ArduPilot/ardupilot/master/Tools/ros2/ros2.repos \
-#     && sudo vcs import --recursive < ros2.repos
 # -------------------------------
 
 # Setup & Build -----------------
@@ -52,9 +45,8 @@ RUN sudo ./gradlew assemble
 # -------------------------------
 
 # # --- Colcom Build Workspace
-WORKDIR ${ARDUPILOT_WS}
-USER admin 
+WORKDIR ${ARDUPILOT_WS} 
 RUN rosdep install -r --from-paths src -i -y --rosdistro humble
-# RUN export PATH=$PATH:/workspaces/ardupilot_ws/src/Micro-XRCE-DDS-Gen/scripts \
-#     && source /opt/ros/${ROS_DISTRO}/setup.bash \
-#     && colcon build
+RUN export PATH=$PATH:/workspaces/ardupilot_ws/src/Micro-XRCE-DDS-Gen/scripts \
+    && source /opt/ros/${ROS_DISTRO}/setup.bash \
+    && colcon build
