@@ -13,13 +13,19 @@ RUN sudo chmod -R 777 ${ARDUPILOT_WS}
 WORKDIR $ARDUPILOT_WS_SRC
 
 # Clone Repos -------------------
-# Ardupilot gazebo 
+RUN git config --global --unset-all safe.directory /workspaces
+# ardupilot_gazebo 
 RUN git clone -b ros2 https://github.com/ArduPilot/ardupilot_gazebo.git
+# ardupilot_gz
+RUN git config --global --add safe.directory / \ 
+    && wget https://raw.githubusercontent.com/ArduPilot/ardupilot_gz/main/ros2_gz.repos \
+    && vcs import --recursive < ros2_gz.repos
 # Micro-XRCE-DDS-Gen
 RUN git clone --recurse-submodules https://github.com/ardupilot/Micro-XRCE-DDS-Gen.git
 # Ardupilot
 USER admin 
-RUN wget https://raw.githubusercontent.com/ArduPilot/ardupilot/master/Tools/ros2/ros2.repos \
+RUN git config --global --add safe.directory / \
+    && wget https://raw.githubusercontent.com/ArduPilot/ardupilot/master/Tools/ros2/ros2.repos \
     && vcs import --recursive < ros2.repos
 # -------------------------------
 
@@ -33,7 +39,7 @@ RUN python -m pip install empy pymavlink MAVProxy pexpect future && \
 # Ardupilot ---> Dep Install
 WORKDIR ${ARDUPILOT_WS}
 RUN source /opt/ros/humble/setup.bash
-RUN sudo apt update && rosdep update && sudo rosdep install -r --rosdistro ${ROS_DISTRO} --from-paths src -y
+RUN sudo apt update && rosdep update && export GZ_VERSION=garden && sudo rosdep install -r --rosdistro ${ROS_DISTRO} --from-paths src -y
 ENV ROS_VERSION=2
 ENV ROS_PYTHON_VERSION=3
 ENV ROS_DISTRO=humble

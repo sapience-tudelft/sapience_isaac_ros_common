@@ -32,15 +32,6 @@ RUN echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} \
     && chmod 0440 /etc/sudoers.d/${USERNAME} \
     && adduser ${USERNAME} video && adduser ${USERNAME} plugdev && adduser ${USERNAME} sudo
 
-# # Copy scripts
-# RUN mkdir -p /usr/local/bin/scripts
-# COPY scripts/*entrypoint.sh /usr/local/bin/scripts/
-# RUN  chmod +x /usr/local/bin/scripts/*.sh
-
-# # Copy middleware profiles
-# RUN mkdir -p /usr/local/share/middleware_profiles
-# COPY middleware_profiles/*profile.xml /usr/local/share/middleware_profiles/
-
 RUN adduser ${USERNAME} sudo
 
 ENV USERNAME=${USERNAME}

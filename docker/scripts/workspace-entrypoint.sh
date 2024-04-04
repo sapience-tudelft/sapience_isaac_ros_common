@@ -17,6 +17,7 @@ sudo apt-get update
 rosdep update
 export GZ_VERSION=garden
 rosdep install -r --from-paths src -i -y --rosdistro humble
+cp /workspaces/sapience_nvidia_devel/src/SAPIENCE/startsitl.sh /workspaces/sapience_nvidia_devel/
 colcon build
 # --------------------------------
 
