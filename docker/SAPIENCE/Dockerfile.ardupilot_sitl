@@ -44,9 +44,10 @@ WORKDIR ${ARDUPILOT_WS_SRC}/Micro-XRCE-DDS-Gen
 RUN sudo ./gradlew assemble
 # -------------------------------
 
-# # --- Colcom Build Workspace
+# Colcon Build Workspace ------------------
 WORKDIR ${ARDUPILOT_WS} 
 RUN rosdep install -r --from-paths src -i -y --rosdistro humble
 RUN export PATH=$PATH:/workspaces/ardupilot_ws/src/Micro-XRCE-DDS-Gen/scripts \
     && source /opt/ros/${ROS_DISTRO}/setup.bash \
     && colcon build
+# ----------------------------------------
