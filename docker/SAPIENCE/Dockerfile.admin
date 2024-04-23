@@ -78,7 +78,15 @@ RUN apt-get update \
         python-numpy \
         tzdata \
         xvfb \
+        ros-humble-joint-state-publisher \
+        ros-humble-rqt-tf-tree \
     && apt-get clean \
     && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    
+RUN apt-get update \
+ && apt-get install -y \
+    ros-${ROS_DISTRO}-librealsense2* \
+    ros-${ROS_DISTRO}-realsense2-* \
+ && rm -rf /var/lib/apt/lists/*
 
