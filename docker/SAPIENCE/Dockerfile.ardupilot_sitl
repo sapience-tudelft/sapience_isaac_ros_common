@@ -17,6 +17,7 @@ WORKDIR $ARDUPILOT_WS_SRC
 USER admin
 RUN git config --global --add safe.directory '*' \ 
     && wget https://raw.githubusercontent.com/ArduPilot/ardupilot_gz/main/ros2_gz.repos \
+    && sed -i '/ros_gz:/,/version: humble/d' ros2_gz.repos \
     && vcs import --recursive < ros2_gz.repos
 # Micro-XRCE-DDS-Gen
 RUN git clone --recurse-submodules https://github.com/ardupilot/Micro-XRCE-DDS-Gen.git
