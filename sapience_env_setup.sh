@@ -31,7 +31,7 @@ git clone -b ros2_migration git@github.com:tudelft/SAPIENCE.git
 cd SAPIENCE && git submodule update --init --recursive && cd ..
 
 # Clone GPS package
-git clone -b ros2_devel git@github.com:swri-robotics/gps_umd.git
+git clone -b ros2-devel git@github.com:swri-robotics/gps_umd.git
 cd gps_umd && git submodule update --init --recursive && cd ..
 
 ## Clone ardupilot without building
