@@ -11,3 +11,6 @@ ENV RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 RUN wget -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg https://packages.osrfoundation.org/gazebo.gpg && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
 RUN apt-get update && apt-get install -y gz-garden
 RUN rm -rf /var/lib/apt/lists/*
+
+# Add simulator models to Gazebo path
+ENV GZ_SIM_RESOURCE_PATH=/workspaces/sapience_nvidia_devel/src/SAPIENCE/simulator/models/
