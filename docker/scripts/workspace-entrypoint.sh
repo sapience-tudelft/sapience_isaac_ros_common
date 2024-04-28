@@ -16,6 +16,7 @@ source /opt/ros/${ROS_DISTRO}/setup.bash
 cd /workspaces/ardupilot_ws/ && rosdep install -r --from-paths src -i -y --rosdistro humble && 
 export PATH=$PATH:/workspaces/ardupilot_ws/src/Micro-XRCE-DDS-Gen/scripts
 export PATH=$PATH:/workspaces/ardupilot_ws/src/ardupilot/Tools/autotest
+sudo apt install ros-humble-geographic-msgs 
 colcon build
 . install/setup.bash
 cd /workspaces/sapience_nvidia_devel
