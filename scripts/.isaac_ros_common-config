@@ -1,2 +1,2 @@
-CONFIG_IMAGE_KEY="ros2_humble.admin.gazebo.ardupilot_sitl.mavroslink"
+CONFIG_IMAGE_KEY="ros2_humble.admin.gazebo.ardupilot_sitl"
 CONFIG_DOCKER_SEARCH_DIRS=(${ISAAC_ROS_WS}/src/isaac_ros_common/docker/SAPIENCE/)
