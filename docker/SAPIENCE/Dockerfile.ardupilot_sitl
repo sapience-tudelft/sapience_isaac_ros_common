@@ -3,6 +3,7 @@ FROM $BASE_IMAGE
 
 ARG ARDUPILOT_WS=/workspaces/ardupilot_ws
 ARG ARDUPILOT_WS_SRC=${ARDUPILOT_WS}/src
+ARG Dummy_Variable=1
 
 # Install git 
 RUN apt-get update && apt-get install -y git; git config --global url."https://github.com/".insteadOf git://github.com/

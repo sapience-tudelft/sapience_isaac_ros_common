@@ -85,8 +85,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
     
 RUN apt-get update \
- && apt-get install -y \
+    && apt-get install -y \
     ros-${ROS_DISTRO}-librealsense2* \
     ros-${ROS_DISTRO}-realsense2-* \
- && rm -rf /var/lib/apt/lists/*
+    ros-${ROS_DISTRO}-geographic-msgs \
+    ros-${ROS_DISTRO}-eigen-stl-containers \
+    && rm -rf /var/lib/apt/lists/*
 
