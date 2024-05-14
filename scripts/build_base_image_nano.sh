@@ -23,8 +23,8 @@ DOCKER_SEARCH_DIRS=(${DOCKER_DIR})
 #
 # CONFIG_DOCKER_SEARCH_DIRS (array, can be empty)
 
-if [[ -f "${ROOT}/.docker_dev_config" ]]; then
-    . "${ROOT}/.docker_dev_config"
+if [[ -f "${ROOT}/.isaac_ros_common-config" ]]; then
+    . "${ROOT}/.isaac_ros_common-config"
 
     # Prepend configured docker search dirs
     if [ ${#CONFIG_DOCKER_SEARCH_DIRS[@]} -gt 0 ]; then

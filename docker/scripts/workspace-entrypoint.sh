@@ -16,7 +16,7 @@ source /opt/ros/${ROS_DISTRO}/setup.bash
 cd /workspaces/ardupilot_ws/ && rosdep install -r --from-paths src -i -y --rosdistro humble && 
 export PATH=$PATH:/workspaces/ardupilot_ws/src/Micro-XRCE-DDS-Gen/scripts
 export PATH=$PATH:/workspaces/ardupilot_ws/src/ardupilot/Tools/autotest
-colcon build
+# colcon build
 . install/setup.bash
 cd /workspaces/sapience_nvidia_devel
 # --------------------------------
@@ -26,12 +26,7 @@ sudo apt-get update
 rosdep update
 export GZ_VERSION=garden
 rosdep install -r --from-paths src -i -y --rosdistro humble
-cp /workspaces/sapience_nvidia_devel/src/SAPIENCE/startsitl.sh /workspaces/sapience_nvidia_devel/
-colcon build
-. install/setup.bash
-alias launch_mavproxy="mavproxy.py --console --master=:14550"
 # --------------------------------
-
 
 # Return to starting point
 cd /workspaces/sapience_nvidia_devel
