@@ -20,8 +20,8 @@ function usage() {
 #
 # CONFIG_IMAGE_KEY (string, can be empty)
 
-if [[ -f "${ROOT}/.docker_dev_config" ]]; then
-    . "${ROOT}/.docker_dev_config"
+if [[ -f "${ROOT}/.docker_onboard_nano_config" ]]; then
+    . "${ROOT}/.docker_onboard_nano_config"
 fi
 
 ISAAC_ROS_DEV_DIR="$1"
