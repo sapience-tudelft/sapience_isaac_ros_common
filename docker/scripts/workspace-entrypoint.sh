@@ -33,6 +33,9 @@ cd /workspaces/sapience_nvidia_devel
 source install/setup.bash
 source ../ardupilot_ws/install/setup.bash
 
+#install geographic bullshit with root privileges
+sudo ./src/isaac_ros_common/install_geographiclib_datasets.sh
+
 # Restart udev daemon
 sudo service udev restart
 
