@@ -23,8 +23,8 @@ DOCKER_SEARCH_DIRS=(${DOCKER_DIR})
 #
 # CONFIG_DOCKER_SEARCH_DIRS (array, can be empty)
 
-if [[ -f "${ROOT}/.isaac_ros_common-config" ]]; then
-    . "${ROOT}/.isaac_ros_common-config"
+if [[ -f "${ROOT}/.docker_onboard_nano_config" ]]; then
+    . "${ROOT}/.docker_onboard_nano_config"
 
     # Prepend configured docker search dirs
     if [ ${#CONFIG_DOCKER_SEARCH_DIRS[@]} -gt 0 ]; then
