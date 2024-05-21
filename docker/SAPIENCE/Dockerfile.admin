@@ -80,6 +80,9 @@ RUN apt-get update \
         xvfb \
         ros-humble-joint-state-publisher \
         ros-humble-rqt-tf-tree \
+        ros-humble-rviz2 \
+        ros-humble-velodyne \
+        ros-humble-velodyne-driver \
         libgeographic-dev \
         geographiclib-tools \
     && apt-get clean \
