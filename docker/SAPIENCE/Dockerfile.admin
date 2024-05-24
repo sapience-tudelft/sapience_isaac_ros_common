@@ -91,5 +91,6 @@ RUN apt-get update \
     ros-${ROS_DISTRO}-realsense2-* \
     ros-${ROS_DISTRO}-geographic-msgs \
     ros-${ROS_DISTRO}-eigen-stl-containers \
+    ros-${ROS_DISTRO}-isaac-ros-visual-slam \
     && rm -rf /var/lib/apt/lists/*
 
