@@ -20,8 +20,8 @@ function usage() {
 #
 # CONFIG_IMAGE_KEY (string, can be empty)
 
-if [[ -f "${ROOT}/.docker_dev_config" ]]; then
-    . "${ROOT}/.docker_dev_config"
+if [[ -f "${ROOT}/.docker_onboard_nano_config" ]]; then
+    . "${ROOT}/.docker_onboard_nano_config"
 fi
 
 ISAAC_ROS_DEV_DIR="$1"
@@ -137,7 +137,7 @@ if [[ ! -z "${IMAGE_KEY}" ]]; then
 fi
 
 print_info "Building $BASE_IMAGE_KEY base as image: $BASE_NAME using key $BASE_IMAGE_KEY"
-$ROOT/build_base_image.sh $BASE_IMAGE_KEY $BASE_NAME '' '' ''
+$ROOT/build_base_image_nano.sh $BASE_IMAGE_KEY $BASE_NAME '' '' ''
 
 if [ $? -ne 0 ]; then
     print_error "Failed to build base image: $BASE_NAME, aborting."
