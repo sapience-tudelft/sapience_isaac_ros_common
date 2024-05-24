@@ -1,2 +1,2 @@
-CONFIG_IMAGE_KEY="ros2_humble.admin.mavroslink"
+CONFIG_IMAGE_KEY="ros2_humble.realsense.admin.mavroslink"
 CONFIG_DOCKER_SEARCH_DIRS=(${ISAAC_ROS_WS}/src/isaac_ros_common/docker/SAPIENCE/)
