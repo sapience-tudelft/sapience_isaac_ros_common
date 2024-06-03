@@ -49,6 +49,7 @@ RUN sudo ./gradlew assemble
 # Colcon Build Workspace ------------------
 WORKDIR ${ARDUPILOT_WS}
 RUN rosdep install -r --from-paths src -i -y --rosdistro humble
+ENV GZ_VERSION=garden
 RUN export PATH=$PATH:/workspaces/ardupilot_ws/src/Micro-XRCE-DDS-Gen/scripts \
     && source /opt/ros/${ROS_DISTRO}/setup.bash \
     && colcon build
