@@ -10,5 +10,3 @@ RUN sudo chmod +x install_geographiclib_datasets.sh && ./install_geographiclib_d
 USER admin
 
 
-
-
