@@ -26,6 +26,7 @@ sudo apt-get update
 rosdep update
 export GZ_VERSION=garden
 rosdep install -r --from-paths src -i -y --rosdistro humble
+cp ./src/SAPIENCE/sim_launch3d.py .
 # --------------------------------
 
 # Return to starting point
