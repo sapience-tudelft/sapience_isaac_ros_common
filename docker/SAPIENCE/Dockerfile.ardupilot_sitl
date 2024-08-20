@@ -51,6 +51,19 @@ WORKDIR ${ARDUPILOT_WS}
 ENV GZ_VERSION=garden
 RUN rosdep install -r --from-paths src -i -y --rosdistro humble
 ENV GZ_VERSION=garden
+
+USER root
+RUN apt-get update && apt-get install -y \
+    libgz-sim7-dev \
+    rapidjson-dev \
+    libopencv-dev \
+    libgstreamer1.0-dev \
+    libgstreamer-plugins-base1.0-dev \
+    gstreamer1.0-plugins-bad \
+    gstreamer1.0-libav \
+    gstreamer1.0-gl \
+    && rm -rf /var/lib/apt/lists/*
+USER admin
 RUN export PATH=$PATH:/workspaces/ardupilot_ws/src/Micro-XRCE-DDS-Gen/scripts \
     && source /opt/ros/${ROS_DISTRO}/setup.bash \
     && colcon build
