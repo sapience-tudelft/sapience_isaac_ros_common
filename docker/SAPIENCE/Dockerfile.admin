@@ -98,5 +98,6 @@ RUN apt-get update \
     ros-${ROS_DISTRO}-eigen-stl-containers \
     ros-${ROS_DISTRO}-isaac-ros-visual-slam \
     ros-${ROS_DISTRO}-isaac-ros-unet \
+    ros-${ROS_DISTRO}-isaac-ros-yolov8 \
     && rm -rf /var/lib/apt/lists/*
 
