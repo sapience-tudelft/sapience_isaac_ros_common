@@ -12,27 +12,28 @@
 echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
 source /opt/ros/${ROS_DISTRO}/setup.bash
 
-# Ardupilot_ws -------------------
-cd /workspaces/ardupilot_ws/ && rosdep install -r --from-paths src -i -y --rosdistro humble && 
-export PATH=$PATH:/workspaces/ardupilot_ws/src/Micro-XRCE-DDS-Gen/scripts
-export PATH=$PATH:/workspaces/ardupilot_ws/src/ardupilot/Tools/autotest
-# colcon build
-. install/setup.bash
-cd /workspaces/sapience_nvidia_devel
-# --------------------------------
+# # Ardupilot_ws -------------------
+# cd /workspaces/ardupilot_ws/ && rosdep install -r --from-paths src -i -y --rosdistro humble && 
+# export PATH=$PATH:/workspaces/ardupilot_ws/src/Micro-XRCE-DDS-Gen/scripts
+# export PATH=$PATH:/workspaces/ardupilot_ws/src/ardupilot/Tools/autotest
+# # colcon build
+# . install/setup.bash
+# cd /workspaces/sapience_nvidia_devel
+# # --------------------------------
 
-# Sapience Devel ws --------------
-sudo apt-get update
-rosdep update
-export GZ_VERSION=garden
-rosdep install -r --from-paths src -i -y --rosdistro humble
-cp ./src/SAPIENCE/sim_launch3d.py .
-# --------------------------------
+# # Sapience Devel ws --------------
+# sudo apt-get update
+# rosdep update
+# export GZ_VERSION=garden
+# rosdep install -r --from-paths src -i -y --rosdistro humble
+# # --------------------------------
 
 # Return to starting point
 cd /workspaces/sapience_nvidia_devel
 source install/setup.bash
 source ../ardupilot_ws/install/setup.bash
+cp ./src/SAPIENCE/sim_launch3d.py .
+cp ./src/SAPIENCE/drone_launch.py .
 
 # #install geographic bullshit with root privileges
 # sudo ./src/isaac_ros_common/install_geographiclib_datasets.sh
