@@ -3,10 +3,16 @@ FROM $BASE_IMAGE
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN sudo apt install -y python3-vcstool python3-rosinstall-generator
+RUN pip install pymavlink testresources
 
 USER root
 RUN wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
 RUN sudo chmod +x install_geographiclib_datasets.sh && ./install_geographiclib_datasets.sh
+
+RUN apt-get update && apt-get install -y \
+    libgps-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 USER admin
 
 
