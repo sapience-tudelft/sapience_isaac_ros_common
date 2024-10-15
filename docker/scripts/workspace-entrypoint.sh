@@ -22,6 +22,8 @@ source /opt/ros/${ROS_DISTRO}/setup.bash
 # # --------------------------------
 
 # # Sapience Devel ws --------------
+# TODO: re-enabled in an attempt to get  install/setup.bash to work!
+# TODO: theory is that this was ran once, was set up and then removed?
 # sudo apt-get update
 # rosdep update
 # export GZ_VERSION=garden

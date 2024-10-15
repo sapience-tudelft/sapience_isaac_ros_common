@@ -16,8 +16,12 @@ WORKDIR $ARDUPILOT_WS_SRC
 # Clone Repos -------------------
 # Ardupilot & Gazebo Repos
 USER admin
+# TODO
+COPY ros2_gz.repos ros2_gz.repos
 RUN git config --global --add safe.directory '*' \ 
-    && wget https://raw.githubusercontent.com/maximecapelle/sapience_ardupilot_gz/main/ros2_gz.repos \
+# Modified since some referenced repo's do NOT exist! ^LT
+    ##&& wget https://raw.githubusercontent.com/ArduPilot/ardupilot_gz/main/ros2_gz.repos \
+    #&& wget https://raw.githubusercontent.com/maximecapelle/sapience_ardupilot_gz/main/ros2_gz.repos \
     # && sed -i '/ros_gz:/,/version: humble/d' ros2_gz.repos \
     && vcs import --recursive < ros2_gz.repos
 # Micro-XRCE-DDS-Gen
